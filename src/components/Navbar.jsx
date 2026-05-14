@@ -11,7 +11,8 @@ const Navbar = () => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
     };
-    window.addEventListener('scroll', handleScroll);
+    
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -29,12 +30,17 @@ const Navbar = () => {
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
         scrolled ? 'glass py-3' : 'bg-transparent py-6'
       }`}
+      style={{
+        backdropFilter: scrolled ? 'blur(12px)' : 'none',
+        WebkitBackdropFilter: scrolled ? 'blur(12px)' : 'none',
+        willChange: 'backdrop-filter, background',
+      }}
     >
       <div className="container mx-auto px-6 flex justify-between items-center">
         <motion.div 
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
-          className="flex items-center gap-2"
+          className="flex items-center gap-2 z-10"
         >
           <span className="font-bold tracking-tighter text-white">
             <img src={logo} alt="Tatheon Digital" className="h-10 md:h-12 w-auto object-contain" />
@@ -66,8 +72,12 @@ const Navbar = () => {
         </div>
 
         {/* Mobile Toggle */}
-        <div className="md:hidden">
-          <button onClick={() => setIsOpen(!isOpen)} className="text-white">
+        <div className="md:hidden z-20">
+          <button 
+            onClick={() => setIsOpen(!isOpen)} 
+            className="text-white transition-colors hover:text-electric-blue"
+            aria-label="Toggle menu"
+          >
             {isOpen ? <X size={30} /> : <Menu size={30} />}
           </button>
         </div>
@@ -81,6 +91,11 @@ const Navbar = () => {
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             className="md:hidden glass border-t border-white/10 overflow-hidden"
+            style={{
+              backdropFilter: 'blur(12px)',
+              WebkitBackdropFilter: 'blur(12px)',
+              willChange: 'backdrop-filter',
+            }}
           >
             <div className="flex flex-col p-6 gap-4">
               {navLinks.map((link) => (
@@ -88,7 +103,7 @@ const Navbar = () => {
                   key={link.name}
                   href={link.href}
                   onClick={() => setIsOpen(false)}
-                  className="text-gray-300 hover:text-electric-blue flex items-center gap-4 text-lg font-medium"
+                  className="text-gray-300 hover:text-electric-blue flex items-center gap-4 text-lg font-medium transition-colors"
                 >
                   <span className="text-electric-blue">{link.icon}</span>
                   {link.name}
@@ -99,7 +114,7 @@ const Navbar = () => {
                   setIsOpen(false);
                   document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
                 }}
-                className="w-full mt-4 px-6 py-3 rounded-xl bg-gradient-to-r from-electric-blue to-neon-purple text-white font-bold"
+                className="w-full mt-4 px-6 py-3 rounded-xl bg-gradient-to-r from-electric-blue to-neon-purple text-white font-bold transition-transform hover:scale-105"
               >
                 START PROJECT
               </button>

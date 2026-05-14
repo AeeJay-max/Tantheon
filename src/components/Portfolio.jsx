@@ -19,7 +19,7 @@ const projects = [
     description: "A modern e-commerce platform for local crafts, featuring a seamless shopping experience and premium UI.",
     metric: "Full-Stack System",
     image: "https://images.unsplash.com/photo-1557821552-17105176677c?q=80&w=2978&auto=format&fit=crop",
-    link: "#",
+    link: "https://zimcrafts-hub.vercel.app/",
     github: "https://github.com/thabani29/Zimcrafts-Hub/tree/main/frontend",
     delay: 0.2
   },

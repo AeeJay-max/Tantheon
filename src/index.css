@@ -32,40 +32,58 @@
   color-scheme: dark;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
   background-color: var(--color-black-accent);
   color: white;
   font-family: var(--font-outfit);
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Glassmorphism Utility */
+/* CRITICAL: Production-Safe Glassmorphism Utilities */
+/* These must use !important to prevent purging and ensure consistent rendering */
+
 .glass {
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.03) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.05) !important;
+  will-change: backdrop-filter !important;
+  transform: translateZ(0) !important;
+  backface-visibility: hidden !important;
 }
 
 .glass-card {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  background: rgba(255, 255, 255, 0.05) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37) !important;
+  will-change: backdrop-filter !important;
+  transform: translateZ(0) !important;
+  backface-visibility: hidden !important;
 }
 
 .liquid-glass {
-  background: rgba(255, 255, 255, 0.02);
-  backdrop-filter: blur(40px);
-  -webkit-backdrop-filter: blur(40px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.02) !important;
+  backdrop-filter: blur(40px) !important;
+  -webkit-backdrop-filter: blur(40px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
   box-shadow: 
     0 20px 40px -10px rgba(0, 0, 0, 0.6),
-    inset 0 1px 1px 0 rgba(255, 255, 255, 0.2);
-  border-radius: 2.5rem;
-  position: relative;
-  overflow: hidden;
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.2) !important;
+  border-radius: 2.5rem !important;
+  position: relative !important;
+  overflow: hidden !important;
+  will-change: backdrop-filter !important;
+  transform: translateZ(0) !important;
+  backface-visibility: hidden !important;
 }
 
 .liquid-glass::after {
@@ -109,6 +127,7 @@ body {
   background: linear-gradient(to right, var(--color-electric-blue), var(--color-neon-purple));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .liquid-button {
@@ -169,4 +188,24 @@ body {
   height: 100%;
   z-index: 0;
   pointer-events: none;
+}
+
+/* GPU Acceleration & Performance Optimization */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Ensure fixed elements maintain z-context */
+nav {
+  position: fixed !important;
+  will-change: auto;
+}
+
+/* Mobile menu optimization */
+@media (max-width: 768px) {
+  nav > div:last-child {
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+  }
 }
