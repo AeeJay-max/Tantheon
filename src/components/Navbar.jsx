@@ -99,15 +99,23 @@ const Navbar = () => {
           >
             <div className="flex flex-col p-6 gap-4">
               {navLinks.map((link) => (
-                <a
+                <button
                   key={link.name}
-                  href={link.href}
-                  onClick={() => setIsOpen(false)}
-                  className="text-gray-300 hover:text-electric-blue flex items-center gap-4 text-lg font-medium transition-colors"
+                  onClick={() => {
+                    setIsOpen(false);
+                    const targetId = link.href.replace('#', '');
+                    const element = document.getElementById(targetId);
+                    if (element) {
+                      setTimeout(() => {
+                        element.scrollIntoView({ behavior: 'smooth' });
+                      }, 100);
+                    }
+                  }}
+                  className="text-gray-300 hover:text-electric-blue flex items-center gap-4 text-lg font-medium transition-colors text-left"
                 >
                   <span className="text-electric-blue">{link.icon}</span>
                   {link.name}
-                </a>
+                </button>
               ))}
               <button 
                 onClick={() => {
